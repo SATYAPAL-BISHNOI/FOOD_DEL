@@ -22,3 +22,5 @@ const foodSchema = new mongoose.Schema({
         required: true
     }
 })
+
+
