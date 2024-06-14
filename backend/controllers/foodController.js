@@ -1,3 +1,4 @@
+import { log } from "console";
 import foodModel from "../models/foodModel.js";
 import fs from 'fs'
 
@@ -37,13 +38,14 @@ const foodList = async (req,res)=>{
 
 const removeFood = async (req,res)=>{
     try {
-        const food = await foodModel.findById(req.params.id)
-        fs.unlinkSync(`./public/images/${food.image}`)
-        await foodModel.findByIdAndDelete(req.params.id)
-        res.json({success:true,message:"food Deleted"})
+        const food = await foodModel.findById(req.body.id);
+        fs.unlink(`uploads/$(food.image)`,()=>{})
+
+        await foodModel.findByIdAndDelete(req.body.id);
+        res.json({success:true,message:"FOOD-REMOVED"})
     } catch (error) {
-        console.log(error)
-        res.json({success:false,message:"Error"})
+        console.log(error);
+        res.json({success:false,message:"Faild"})
     }
 }
 
